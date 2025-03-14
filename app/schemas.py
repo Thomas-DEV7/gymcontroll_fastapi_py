@@ -2,19 +2,24 @@ from pydantic import BaseModel
 from datetime import datetime
 from typing import List, Optional
 
+from pydantic import BaseModel, EmailStr
+
 class UserCreate(BaseModel):
     name: str
-    email: str
+    email: EmailStr
+    password: str
+
+class UserLogin(BaseModel):
+    email: EmailStr
     password: str
 
 class UserOut(BaseModel):
     id: int
     name: str
-    email: str
+    email: EmailStr
 
     class Config:
-        orm_mode = True
-
+        from_attributes = True
 class TrainingBase(BaseModel):
     name: str
     description: Optional[str] = None
@@ -48,3 +53,7 @@ class ExecutionOut(ExecutionBase):
 
     class Config:
         orm_mode = True
+        
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
